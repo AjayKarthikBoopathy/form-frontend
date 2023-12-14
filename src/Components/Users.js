@@ -10,24 +10,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteUser, getUser } from "../redux/userSlice";
 
 
-function Users({ userData, setUserData }) {
+function Users() {
     const history = useHistory();
     const users = useSelector(state => state.users.users)
     const dispatch = useDispatch()
 
-    useEffect(()=>{
-        const getUsersData = async () =>{
+    useEffect(() => {
+        const getUsersData = async () => {
             const response = await fetch("https://form-backend-iota.vercel.app/users/all", {
-              method:"GET",
-            }); 
+                method: "GET",
+            });
             const data = await response.json();
-            if(data){
-              setUserData(data.data) 
-              //dispatch(getUser(data.data));
+            if (data) {
+
+                console.log(data)
+                dispatch(getUser(data.data));
             }
         }
         getUsersData();
-      }, [])
+    }, [])
 
     // delete functionality
     const deleteUserData = async (userId) => {
@@ -38,10 +39,9 @@ function Users({ userData, setUserData }) {
 
         const data = await response.json()
         if (data) {
-            const remainingUsers =
-                userData.filter((user) => user._id !== userId)
-            setUserData(remainingUsers)
-            //dispatch(deleteUser(userId))
+
+            dispatch(deleteUser(userId))
+            console.log(data)
         }
     }
 
@@ -53,17 +53,15 @@ function Users({ userData, setUserData }) {
         >
 
             <Box className='card-container1' sx={{ display: "flex", flexWrap: "wrap", gap: "2rem", paddingLeft: "60px", columnGap: "8rem" }}>
-               
-                {userData.map((user, idx) => (
+
+                {users.map((user, idx) => (
                     <Box key={idx} className='card1' sx={{ Width: 200, height: 420, boxShadow: "6px 5px 12px 2px lightGrey" }}>
-                    
-                        <CardContent sx={{ display: "flex", rowGap: "20px", flexWrap:"wrap", flexDirection:"column" }}>
+
+                        <CardContent sx={{ display: "flex", rowGap: "20px", flexWrap: "wrap", flexDirection: "column" }}>
                             <Typography gutterBottom variant="h5" component="div">
                                 {user.first_name} {user.last_name}
                             </Typography>
-                            {/* <Typography gutterBottom variant="h5" component="div">
-                                {user.last_name}
-                            </Typography> */}
+
                             <Typography variant="body2" color="text.primary">
                                 {user.email_id}
                             </Typography>
@@ -85,7 +83,7 @@ function Users({ userData, setUserData }) {
                             <Typography variant="body2" color="text.primary">
                                 {user.zip_code}
                             </Typography>
-                                                        
+
                         </CardContent>
 
                         <CardActions sx={{ justifyContent: "center" }}>
@@ -94,20 +92,20 @@ function Users({ userData, setUserData }) {
                                 onClick={() => history.push(`/users/edit/${user._id}`)}
                             >
 
-                            <EditIcon />
+                                <EditIcon />
 
                             </Button>
                             <Button
                                 size="small"
-                               
+
                                 onClick={() => deleteUserData(user._id)}
                             >
-                            
-                            <DeleteIcon />
+
+                                <DeleteIcon />
 
                             </Button>
                         </CardActions>
-                    
+
                     </Box>
 
                 ))}

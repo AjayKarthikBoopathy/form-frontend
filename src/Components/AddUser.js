@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Base from '../Base/Base'
 import { useHistory } from 'react-router-dom'
-import { Button, IconButton, Snackbar, TextField } from '@mui/material'
 import Validation from './Validation'
 import Select from 'react-select'
 import { addUser } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 
 
-function AddUser({ userData, setUserData }) {
+function AddUser() {
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -17,7 +16,7 @@ function AddUser({ userData, setUserData }) {
   const [pick_country, setPick_country] = useState();
   const [stateArray, setStateArray] = useState([]);
   const [option, setOption] = useState([])
-  
+
   useEffect(() => {
     const getCountries = async () => {
       const response = await fetch("https://restcountries.com/v2/all", {
@@ -36,41 +35,39 @@ function AddUser({ userData, setUserData }) {
     let countData = countries[eventt.target.value]
     setDial(countData.callingCodes[0]);
     setPick_country(countData.name);
-   }
+  }
 
   useEffect(() => {
     const getStates = async () => {
-      const response = await fetch(`https://www.universal-tutorial.com/api/states/${pick_country}`, { 
+      const response = await fetch(`https://www.universal-tutorial.com/api/states/${pick_country}`, {
         method: "GET",
         headers: {
           "Accept": "application/json",
           "mode": 'no-cors',
           "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJhamF5a2FydGhpa2Jhazk3QGdtYWlsLmNvbSIsImFwaV90b2tlbiI6Ikw0WVlmTklfeWx1SGtzVk16QUNlQ2RiQ2M1QXhIQXloQm1ENmJFa2ZKU1pUMFRWdHltRFRNOFBGV3k5UjNYVkQwWm8ifSwiZXhwIjoxNzAyNjM0OTYzfQ.Vc080PMdm_CxCO4TGmEKBD-X6lkVbPVv0cWL-Q-3FBE"
-        },  
+        },
       });
       const sdata = await response.json();
       if (sdata) {
         setStateArray(sdata)
         if (sdata) {
-        
-        const newoption = sdata.map((data) => {  
+
+          const newoption = sdata.map((data) => {
             return {
-              value: data.state_name, 
-              label: data.state_name  
+              value: data.state_name,
+              label: data.state_name
             }
           })
-          setOption(newoption)  
+          setOption(newoption)
         }
       }
     }
-    if(pick_country){ 
-    getStates();
+    if (pick_country) {
+      getStates();
     }
-  }, [pick_country]) 
+  }, [pick_country])
 
-  //console.log(stateArray)
-  //console.log(option)
-  
+
 
   const [values, setValues] = useState({
     first_name: '',
@@ -105,7 +102,7 @@ function AddUser({ userData, setUserData }) {
     const errorValue = Validation(values)
     setErrors(errorValue);
     //console.log(errors)
-    const newdata = {...values}
+    const newdata = { ...values }
     newdata.mobile_code = dial
     newdata.country = pick_country
     //post
@@ -118,10 +115,9 @@ function AddUser({ userData, setUserData }) {
         },
       })
       const data = await response.json()
-      setUserData([...userData, data])
 
-      // newUser._id = data.data.result.insertedId
-      // dispatch(addUser(newUser))
+      newdata._id = data.data.result.insertedId
+      dispatch(addUser(newdata))
       history.push("/users/all")
     }
   }
@@ -171,10 +167,14 @@ function AddUser({ userData, setUserData }) {
 
 
           <div className='value-area'>
-            <label htmlFor="address_1" className='mt-10'><strong>Address Line1:</strong></label>
-            <input type='text' placeholder='Enter Address Line1' className='form-control'
-              name='address_1' onChange={handleInput} />
-            {errors.address_1 && <p style={{ color: "red" }}>{errors.address_1}</p>}
+            <div>
+              <label htmlFor="address_1" className='mt-10'><strong>Address Line1:</strong></label>
+            </div>
+            <div>
+              <input type='text' placeholder='Enter Address Line1' className='form-control'
+                name='address_1' onChange={handleInput} />
+              {errors.address_1 && <p style={{ color: "red" }}>{errors.address_1}</p>}
+            </div>
           </div>
 
           <div className='value-area'>
@@ -187,10 +187,14 @@ function AddUser({ userData, setUserData }) {
 
 
           <div className='value-area'>
-            <label htmlFor="zip_code" className='mt-10'><strong>Zip Code:</strong></label>
-            <input type='text' placeholder='Enter Zip Code' className='form-control'
-              name='zip_code' onChange={handleInput} />
-            {errors.zip_code && <p style={{ color: "red" }}>{errors.zip_code}</p>}
+            <div>
+              <label htmlFor="zip_code" className='mt-10'><strong>Zip Code:</strong></label>
+            </div>
+            <div>
+              <input type='text' placeholder='Enter Zip Code' className='form-control'
+                name='zip_code' onChange={handleInput} />
+              {errors.zip_code && <p style={{ color: "red" }}>{errors.zip_code}</p>}
+            </div>
           </div>
 
 
@@ -200,7 +204,7 @@ function AddUser({ userData, setUserData }) {
               <label><strong>Country:</strong></label>
             </div>
             <div>
-              <select name='country' className='inputss' style={{ width:"170px" }} onChange={(e) => handleCountry(e)}>
+              <select name='country' className='inputss' style={{ width: "170px" }} onChange={(e) => handleCountry(e)}>
                 <option value=""> --Select Country--</option>
                 {countries.map((val, idx) => {
                   return <option key={idx} value={idx}>{val.name}</option>
@@ -211,13 +215,13 @@ function AddUser({ userData, setUserData }) {
 
 
           {/* <Select options={options} /> */}
-          <div className='value-area' style={{marginBottom:"30px"}}>
+          <div className='value-area' style={{ marginBottom: "10px" }}>
             <div>
               <label><strong>State:</strong></label>
             </div>
             <div styles>
 
-              <Select name="state" placeholder={"--Select State--"}  className='inputss2' onChange={handleInput2} options={option}>
+              <Select name="state" placeholder={"--Select State--"} className='inputss2' onChange={handleInput2} options={option}>
                 --Select State--
               </Select>
 
@@ -247,7 +251,7 @@ function AddUser({ userData, setUserData }) {
 
           <div className='value-area'>
             <button className='submit'>
-              Submit
+              SUBMIT
             </button>
           </div>
 

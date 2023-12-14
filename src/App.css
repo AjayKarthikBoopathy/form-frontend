@@ -1,62 +1,62 @@
-*{
+* {
   padding: 0px;
   margin: 0px;
 }
 
-.main-component{
+.main-component {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.heading{
-  padding : 20px;
+.heading {
+  padding: 20px;
   padding-top: 20px;
   font-family: sans-serif;
 }
 
-.main-segment{
+.main-segment {
   width: 100%;
   text-align: center;
 }
 
-.card{
+.card {
   display: flex;
   flex-direction: column;
-  gap :2rem;
+  gap: 2rem;
   align-content: space-around;
-  border : 1px solid red;
-  width : 400px;
+  border: 1px solid red;
+  width: 400px;
   height: 100px;
-  margin : 12px;
+  margin: 12px;
 }
 
-.card-container1{
+.card-container1 {
   display: grid;
-  
+
 }
 
-.card1{
-  
-  
-  gap :2rem;
-  
-  
-  width : 400px;
+.card1 {
+
+
+  gap: 2rem;
+
+
+  width: 400px;
   height: 300px;
-  margin : 20px;
+  margin: 20px;
 }
 
-.card-container{
+.card-container {
   display: flex;
-  gap :1rem;
+  gap: 1rem;
   row-gap: 3rem;
   column-gap: 4rem;
   /* grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); */
 }
 
-.text-area-col{
+.text-area-col {
   width: 34%;
   margin: 0 auto;
   display: flex;
@@ -65,11 +65,11 @@
   gap: 40px;
 }
 
-.child-component{
+.child-component {
   margin: 24px;
 }
 
-.nav-bar{
+.nav-bar {
   width: 100%;
 }
 
@@ -93,10 +93,6 @@
   height: 30px;
 }
 
-/* .basic-multi-select {
-  width: 10px;
-  height: 30px;
-} */
 
 .css1nmdiq5-menu {
   margin-top: 30px;
