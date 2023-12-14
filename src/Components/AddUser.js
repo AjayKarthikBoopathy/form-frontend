@@ -221,7 +221,7 @@ function AddUser() {
             </div>
             <div styles>
 
-              <Select name="state" placeholder={"--Select State--"} className='inputss2' onChange={handleInput2} options={option}>
+              <Select name="state" placeholder={"--Type State--"} className='inputss2' onChange={handleInput2} options={option}>
                 --Select State--
               </Select>
 
