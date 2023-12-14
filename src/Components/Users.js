@@ -6,27 +6,31 @@ import { useHistory } from 'react-router-dom';
 import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import { useDispatch, useSelector } from "react-redux";
+import { deleteUser, getUser } from "../redux/userSlice";
 
 
 function Users({ userData, setUserData }) {
     const history = useHistory();
+    const users = useSelector(state => state.users.users)
+    const dispatch = useDispatch()
 
     useEffect(()=>{
-        const getUsers = async () =>{
+        const getUsersData = async () =>{
             const response = await fetch("https://form-backend-iota.vercel.app/users/all", {
               method:"GET",
             }); 
             const data = await response.json();
             if(data){
               setUserData(data.data) 
+              //dispatch(getUser(data.data));
             }
         }
-        getUsers();
+        getUsersData();
       }, [])
 
     // delete functionality
-    const deleteUser = async (userId) => {
+    const deleteUserData = async (userId) => {
 
         const response = await fetch(`https://form-backend-iota.vercel.app/users/delete/${userId}`, {
             method: "DELETE",
@@ -37,6 +41,7 @@ function Users({ userData, setUserData }) {
             const remainingUsers =
                 userData.filter((user) => user._id !== userId)
             setUserData(remainingUsers)
+            //dispatch(deleteUser(userId))
         }
     }
 
@@ -63,7 +68,7 @@ function Users({ userData, setUserData }) {
                                 {user.email_id}
                             </Typography>
                             <Typography variant="body2" color="text.primary">
-                                {user.mobile_no}
+                                {user.mobile_code}-{user.mobile_no}
                             </Typography>
                             <Typography variant="body2" color="text.primary">
                                 {user.address_1}
@@ -95,7 +100,7 @@ function Users({ userData, setUserData }) {
                             <Button
                                 size="small"
                                
-                                onClick={() => deleteUser(user._id)}
+                                onClick={() => deleteUserData(user._id)}
                             >
                             
                             <DeleteIcon />
