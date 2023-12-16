@@ -44,7 +44,7 @@ function AddUser() {
         headers: {
           "Accept": "application/json",
           "mode": 'no-cors',
-          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJhamF5a2FydGhpa2Jhazk3QGdtYWlsLmNvbSIsImFwaV90b2tlbiI6Ikw0WVlmTklfeWx1SGtzVk16QUNlQ2RiQ2M1QXhIQXloQm1ENmJFa2ZKU1pUMFRWdHltRFRNOFBGV3k5UjNYVkQwWm8ifSwiZXhwIjoxNzAyNzIyMTIzfQ.YMs5F909gyNjzRxbUyuvSEl07YgPfm1UK5FS0EqEfWc"
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJhamF5a2FydGhpa2Jhazk3QGdtYWlsLmNvbSIsImFwaV90b2tlbiI6Ikw0WVlmTklfeWx1SGtzVk16QUNlQ2RiQ2M1QXhIQXloQm1ENmJFa2ZKU1pUMFRWdHltRFRNOFBGV3k5UjNYVkQwWm8ifSwiZXhwIjoxNzAyODA4NDg3fQ.xOtWb4uUPSjfMUlod0NF4LbU9gfGz-5MLU3mpOhi1q8"
         },
       });
       const sdata = await response.json();
