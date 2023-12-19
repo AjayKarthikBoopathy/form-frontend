@@ -22,8 +22,7 @@ function Users() {
             });
             const data = await response.json();
             if (data) {
-
-                console.log(data)
+                //console.log(data)
                 dispatch(getUser(data.data));
             }
         }
@@ -41,7 +40,7 @@ function Users() {
         if (data) {
 
             dispatch(deleteUser(userId))
-            console.log(data)
+            //console.log(data)
         }
     }
 

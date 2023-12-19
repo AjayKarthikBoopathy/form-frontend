@@ -14,6 +14,7 @@ function AddUser() {
   const [countries, setCountries] = useState([]);
   const [dial, setDial] = useState();
   const [pick_country, setPick_country] = useState();
+  const [pick_countryCode, setPick_countryCode] = useState();
   const [stateArray, setStateArray] = useState([]);
   const [option, setOption] = useState([])
 
@@ -33,39 +34,44 @@ function AddUser() {
   const handleCountry = (eventt) => {
 
     let countData = countries[eventt.target.value]
+    //console.log(countData)
     setDial(countData.callingCodes[0]);
     setPick_country(countData.name);
+    setPick_countryCode(countData.alpha2Code);
   }
+
+  //api to get states
+  var headers = new Headers();
+  //headers.append("X-CSCAPI-KEY", "API_KEY");
+  headers.append("X-CSCAPI-KEY", "MW5zNWc2MVBjYjJ0ZTg4Q0NhQ3VtVFhlRGZacld0djRxd1k1WDhOVQ==");
 
   useEffect(() => {
     const getStates = async () => {
-      const response = await fetch(`https://www.universal-tutorial.com/api/states/${pick_country}`, {
+      const response = await fetch(`https://api.countrystatecity.in/v1/countries/${pick_countryCode}/states`, {
         method: "GET",
-        headers: {
-          "Accept": "application/json",
-          "mode": 'no-cors',
-          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJhamF5a2FydGhpa2Jhazk3QGdtYWlsLmNvbSIsImFwaV90b2tlbiI6Ikw0WVlmTklfeWx1SGtzVk16QUNlQ2RiQ2M1QXhIQXloQm1ENmJFa2ZKU1pUMFRWdHltRFRNOFBGV3k5UjNYVkQwWm8ifSwiZXhwIjoxNzAzMDAwOTY0fQ.kj9kiIYgDCeR1a3G-uv0kjiZaEZ0_mQt6feZG31ZS1o"
-        },
+        headers:headers,
+        redirect:"follow"
       });
       const sdata = await response.json();
       if (sdata) {
         setStateArray(sdata)
+        //console.log(sdata)
         if (sdata) {
 
           const newoption = sdata.map((data) => {
             return {
-              value: data.state_name,
-              label: data.state_name
+              value: data.name,
+              label: data.name
             }
           })
           setOption(newoption)
         }
       }
     }
-    if (pick_country) {
+    if (pick_countryCode) {
       getStates();
     }
-  }, [pick_country])
+  }, [pick_countryCode])
 
 
 
